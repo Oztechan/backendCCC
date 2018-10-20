@@ -1,6 +1,10 @@
 package mustafaozhan.github.com.mycurrencies.model
 
 import com.google.gson.annotations.SerializedName
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.TypeAlias
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Mustafa Ozhan on 2018-10-19.
@@ -11,6 +15,7 @@ data class CurrencyResponse(
         @SerializedName("rates") var rates: Rates? = null
 )
 
+@TypeAlias("rates")
 data class Rates(
         @SerializedName("EUR") var eUR: Double? = null,
         @SerializedName("AUD") var aUD: Double? = null,
