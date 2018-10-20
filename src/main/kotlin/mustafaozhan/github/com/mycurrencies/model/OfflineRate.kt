@@ -6,7 +6,7 @@ import org.springframework.data.annotation.TypeAlias
 /**
  * Created by Mustafa Ozhan on 2018-10-20.
  */
-@TypeAlias("offlineRates")
+@TypeAlias("offlineRate")
 data class OfflineRate(
         @Id var base: String,
         var eUR: Double? = null,
