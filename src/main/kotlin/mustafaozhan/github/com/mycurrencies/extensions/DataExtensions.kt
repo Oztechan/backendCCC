@@ -1,13 +1,13 @@
 package mustafaozhan.github.com.mycurrencies.extensions
 
 import mustafaozhan.github.com.mycurrencies.model.CurrencyResponse
-import mustafaozhan.github.com.mycurrencies.model.OfflineRates
+import mustafaozhan.github.com.mycurrencies.model.OfflineRate
 import mustafaozhan.github.com.mycurrencies.model.Rates
 
 /**
  * Created by Mustafa Ozhan on 2018-10-20.
  */
-fun CurrencyResponse.toOfflineRates() = OfflineRates(this.rates?.findBase().toString(),
+fun CurrencyResponse.toOfflineRates() = OfflineRate(this.rates?.findBase().toString(),
         this.rates?.eUR,
         this.rates?.aUD,
         this.rates?.bGN,
@@ -43,7 +43,7 @@ fun CurrencyResponse.toOfflineRates() = OfflineRates(this.rates?.findBase().toSt
 )
 
 
-fun OfflineRates.getRates(): Rates? = Rates(
+fun OfflineRate.getRates(): Rates? = Rates(
         this.eUR,
         this.aUD,
         this.bGN,
