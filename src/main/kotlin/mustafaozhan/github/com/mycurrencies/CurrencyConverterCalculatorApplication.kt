@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
     }
 
     Observable
-            .interval(1, TimeUnit.HOURS)
+            .interval(2, TimeUnit.HOURS)
             .doOnError { throwable ->
                 throwable.printStackTrace()
             }
