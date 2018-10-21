@@ -1,15 +1,13 @@
 package mustafaozhan.github.com.mycurrencies
 
 
-import mustafaozhan.github.com.mycurrencies.extensions.toOfflineRates
-import mustafaozhan.github.com.mycurrencies.repository.OfflineRateRepository
+import mustafaozhan.github.com.mycurrencies.repository.CurrencyResponseRepository
 import mustafaozhan.github.com.mycurrencies.rest.ApiClient
 import mustafaozhan.github.com.mycurrencies.rest.ApiInterface
 import mustafaozhan.github.com.mycurrencies.tools.Currencies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.util.ResourceUtils
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -20,16 +18,14 @@ import java.util.concurrent.TimeUnit
 
 
 @SpringBootApplication
-@EnableMongoRepositories
 class CurrencyConverterCalculatorApplication
 
 @Autowired
-lateinit var offlineRateRepository: OfflineRateRepository
+lateinit var currencyResponseRepository: CurrencyResponseRepository
 
 fun main(args: Array<String>) {
     val context = runApplication<CurrencyConverterCalculatorApplication>(*args)
-    offlineRateRepository = context.getBean(OfflineRateRepository::class.java)
-//    offlineRateRepository = CurrencyConverterCalculatorApplication () as OfflineRateRepository
+    currencyResponseRepository = context.getBean(CurrencyResponseRepository::class.java)
     val properties = Properties()
     try {
         val file = ResourceUtils.getFile("src/main/resources/config.properties").absolutePath
@@ -39,7 +35,7 @@ fun main(args: Array<String>) {
     }
 
     Observable
-            .interval(1, TimeUnit.SECONDS)
+            .interval(1, TimeUnit.HOURS)
             .doOnError { throwable ->
                 throwable.printStackTrace()
             }
@@ -57,8 +53,7 @@ fun main(args: Array<String>) {
                                         throwable.printStackTrace()
                                     }
                                     .subscribe { currencyResponse ->
-                                        offlineRateRepository.save(currencyResponse.toOfflineRates())
-                                        println(it)
+                                        currencyResponseRepository.save(currencyResponse)
                                     }
                         }
             }

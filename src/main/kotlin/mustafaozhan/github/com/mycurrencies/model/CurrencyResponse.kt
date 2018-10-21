@@ -1,16 +1,14 @@
 package mustafaozhan.github.com.mycurrencies.model
 
 import com.google.gson.annotations.SerializedName
-import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Created by Mustafa Ozhan on 2018-10-19.
  */
+@TypeAlias("currencyResponse")
 data class CurrencyResponse(
-        @SerializedName("baseCurrency") var base: String? = null,
+        @SerializedName("base") var base: String? = null,
         @SerializedName("date") var date: String? = null,
         @SerializedName("rates") var rates: Rates? = null
 )
