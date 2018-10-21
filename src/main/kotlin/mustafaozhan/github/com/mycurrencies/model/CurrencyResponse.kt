@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.mycurrencies.model
 
 import com.google.gson.annotations.SerializedName
+import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
 
 /**
@@ -8,7 +9,7 @@ import org.springframework.data.annotation.TypeAlias
  */
 @TypeAlias("currencyResponse")
 data class CurrencyResponse(
-        @SerializedName("base") var base: String? = null,
+        @Id @SerializedName("base") var base: String? = null,
         @SerializedName("date") var date: String? = null,
         @SerializedName("rates") var rates: Rates? = null
 )
