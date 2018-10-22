@@ -8,10 +8,11 @@ import mustafaozhan.github.com.mycurrencies.tools.Currencies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.util.ResourceUtils
+import org.springframework.context.annotation.Bean
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
+import org.springframework.core.io.FileSystemResource
 import rx.Observable
 import rx.schedulers.Schedulers
-import java.io.FileInputStream
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -28,8 +29,7 @@ fun main(args: Array<String>) {
     currencyResponseRepository = context.getBean(CurrencyResponseRepository::class.java)
     val properties = Properties()
     try {
-        val file = ResourceUtils.getFile("src/main/resources/config.properties").absolutePath
-        properties.load(FileInputStream(file))
+        properties.load(CurrencyConverterCalculatorApplication::class.java.getResourceAsStream("/config.properties"))
     } catch (e: IOException) {
         e.printStackTrace()
     }
@@ -45,7 +45,7 @@ fun main(args: Array<String>) {
                             currency != Currencies.NULL
                         }
                         .forEach { currency ->
-                            ApiClient.get(properties.getProperty("exchange_rates_endpoint"))
+                            ApiClient.get(properties.getProperty("config.url"))
                                     .create(ApiInterface::class.java)
                                     .getAllOnBase(currency)
                                     .observeOn(Schedulers.io())
@@ -57,4 +57,13 @@ fun main(args: Array<String>) {
                                     }
                         }
             }
+}
+
+@Bean
+fun propertySourcesPlaceholderConfigurer(): PropertySourcesPlaceholderConfigurer {
+    val properties = PropertySourcesPlaceholderConfigurer()
+    properties.setLocation(FileSystemResource("config.properties"))
+    properties.setIgnoreResourceNotFound(false)
+
+    return properties
 }
