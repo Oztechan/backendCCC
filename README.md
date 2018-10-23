@@ -4,6 +4,6 @@ Currency Converter & Calculator Backend
 
 Used Technologies
 - Kotlin
-- Spring
+- Spring Boot
 - MongoDb
 - Rx
