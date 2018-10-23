@@ -8,9 +8,6 @@ import mustafaozhan.github.com.mycurrencies.tools.Currencies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
-import org.springframework.core.io.FileSystemResource
 import rx.Observable
 import rx.schedulers.Schedulers
 import java.io.IOException
@@ -57,13 +54,4 @@ fun main(args: Array<String>) {
                                     }
                         }
             }
-}
-
-@Bean
-fun propertySourcesPlaceholderConfigurer(): PropertySourcesPlaceholderConfigurer {
-    val properties = PropertySourcesPlaceholderConfigurer()
-    properties.setLocation(FileSystemResource("config.properties"))
-    properties.setIgnoreResourceNotFound(false)
-
-    return properties
 }
