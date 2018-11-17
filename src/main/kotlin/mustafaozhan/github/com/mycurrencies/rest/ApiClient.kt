@@ -1,10 +1,8 @@
 package mustafaozhan.github.com.mycurrencies.rest
 
-import mustafaozhan.github.com.mycurrencies.CurrencyConverterCalculatorApplication
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 
 /**

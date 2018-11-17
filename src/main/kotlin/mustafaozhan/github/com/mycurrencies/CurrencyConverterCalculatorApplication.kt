@@ -32,7 +32,9 @@ fun main(args: Array<String>) {
     }
 
     Observable
-            .interval(2, TimeUnit.HOURS)
+            .interval(1, TimeUnit.MINUTES, Schedulers.io())
+            .take(90)
+            .map { min -> 90 - min }
             .doOnError { throwable ->
                 throwable.printStackTrace()
             }
