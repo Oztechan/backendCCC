@@ -22,6 +22,7 @@ class CurrencyConverterCalculatorApplication
 lateinit var currencyResponseRepository: CurrencyResponseRepository
 
 fun main(args: Array<String>) {
+    var url: String
     val context = runApplication<CurrencyConverterCalculatorApplication>(*args)
     currencyResponseRepository = context.getBean(CurrencyResponseRepository::class.java)
     val properties = Properties()
@@ -29,6 +30,9 @@ fun main(args: Array<String>) {
         properties.load(CurrencyConverterCalculatorApplication::class.java.getResourceAsStream("/config.properties"))
     } catch (e: IOException) {
         e.printStackTrace()
+    }
+    properties.apply {
+        url = getProperty("config.baseUrl") + getProperty("config.apiKey") + getProperty("config.apiSecret")
     }
 
     Observable
@@ -44,14 +48,16 @@ fun main(args: Array<String>) {
                             currency != Currencies.NULL
                         }
                         .forEach { currency ->
-                            ApiClient.get(properties.getProperty("config.url"))
+                            ApiClient.get(url)
                                     .create(ApiInterface::class.java)
                                     .getAllOnBase(currency)
                                     .observeOn(Schedulers.io())
                                     .doOnError { throwable ->
+                                        println(currency.name + " error")
                                         throwable.printStackTrace()
                                     }
                                     .subscribe { currencyResponse ->
+                                        println(currency.name + " success")
                                         currencyResponseRepository.save(currencyResponse)
                                     }
                         }

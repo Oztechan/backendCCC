@@ -37,7 +37,7 @@ data class Rates(
         @SerializedName("BOB") var BOB: Double? = null,
         @SerializedName("BRL") var BRL: Double? = null,
         @SerializedName("BSD") var BSD: Double? = null,
-        @SerializedName("BTC") var BTC: Double? = null,
+        @SerializedName("CRYPTO_BTC") var BTC: Double? = null,
         @SerializedName("BTN") var BTN: Double? = null,
         @SerializedName("BWP") var BWP: Double? = null,
         @SerializedName("BYN") var BYN: Double? = null,
