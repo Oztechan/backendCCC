@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import rx.Observable
 import rx.schedulers.Schedulers
-import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -28,8 +28,8 @@ fun main(args: Array<String>) {
     val properties = Properties()
     try {
         properties.load(CurrencyConverterCalculatorApplication::class.java.getResourceAsStream("/config.properties"))
-    } catch (e: IOException) {
-        e.printStackTrace()
+    } catch (e: Exception) {
+        logOnException(e)
     }
     properties.apply {
         url = getProperty("config.baseUrl") + getProperty("config.apiKey") + getProperty("config.apiSecret")
@@ -41,17 +41,18 @@ fun main(args: Array<String>) {
                 .take(90)
                 .map { min -> 90 - min }
                 .doOnError { throwable ->
-                    throwable.printStackTrace()
+                    logOnThrowable(throwable)
                 }
                 .subscribe {
                     var count = 0
+                    println(SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date()))
+                    println("Update Started !")
                     Currencies.values()
                             .filter { currency ->
                                 currency != Currencies.NULL
                             }
                             .forEach { currency ->
                                 Thread.sleep(333)
-                                println("Update Started !")
                                 ApiClient.get(url)
                                         .create(ApiInterface::class.java)
                                         .getAllOnBase(currency)
@@ -59,7 +60,7 @@ fun main(args: Array<String>) {
                                         .doOnError { throwable ->
                                             count++
                                             println(currency.name + " error $count")
-                                            throwable.printStackTrace()
+                                            logOnThrowable(throwable)
                                         }
                                         .subscribe { currencyResponse ->
                                             count++
@@ -71,6 +72,17 @@ fun main(args: Array<String>) {
                     count = 0
                 }
     } catch (e: Exception) {
-        e.printStackTrace()
+        logOnException(e)
     }
+}
+
+fun logOnException(exception: Exception) {
+    println(SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date()))
+    exception.printStackTrace()
+
+}
+
+fun logOnThrowable(throwable: Throwable) {
+    println(SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date()))
+    throwable.printStackTrace()
 }
