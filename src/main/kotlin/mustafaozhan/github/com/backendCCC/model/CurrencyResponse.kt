@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.mycurrencies.model
+package mustafaozhan.github.com.backendCCC.model
 
 import com.google.gson.annotations.SerializedName
 import org.springframework.data.annotation.Id

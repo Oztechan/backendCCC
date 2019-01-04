@@ -1,7 +1,7 @@
-package mustafaozhan.github.com.mycurrencies.controller
+package mustafaozhan.github.com.backendCCC.controller
 
-import mustafaozhan.github.com.mycurrencies.model.CurrencyResponse
-import mustafaozhan.github.com.mycurrencies.service.CurrencyResponseService
+import mustafaozhan.github.com.backendCCC.model.CurrencyResponse
+import mustafaozhan.github.com.backendCCC.service.CurrencyResponseService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 

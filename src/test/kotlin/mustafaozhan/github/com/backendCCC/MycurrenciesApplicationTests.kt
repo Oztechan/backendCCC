@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.mycurrencies
+package mustafaozhan.github.com.backendCCC
 
 import org.junit.Test
 import org.junit.runner.RunWith

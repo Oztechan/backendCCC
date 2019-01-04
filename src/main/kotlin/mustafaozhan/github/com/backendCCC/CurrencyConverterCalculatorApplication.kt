@@ -1,10 +1,10 @@
-package mustafaozhan.github.com.mycurrencies
+package mustafaozhan.github.com.backendCCC
 
 
-import mustafaozhan.github.com.mycurrencies.repository.CurrencyResponseRepository
-import mustafaozhan.github.com.mycurrencies.rest.ApiClient
-import mustafaozhan.github.com.mycurrencies.rest.ApiInterface
-import mustafaozhan.github.com.mycurrencies.tools.Currencies
+import mustafaozhan.github.com.backendCCC.repository.CurrencyResponseRepository
+import mustafaozhan.github.com.backendCCC.rest.ApiClient
+import mustafaozhan.github.com.backendCCC.rest.ApiInterface
+import mustafaozhan.github.com.backendCCC.tools.Currencies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

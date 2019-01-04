@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.mycurrencies.rest
+package mustafaozhan.github.com.backendCCC.rest
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
