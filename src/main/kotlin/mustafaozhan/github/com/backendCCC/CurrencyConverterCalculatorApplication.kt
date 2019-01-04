@@ -35,31 +35,42 @@ fun main(args: Array<String>) {
         url = getProperty("config.baseUrl") + getProperty("config.apiKey") + getProperty("config.apiSecret")
     }
 
-    Observable
-            .interval(1, TimeUnit.MINUTES, Schedulers.io())
-            .take(90)
-            .map { min -> 90 - min }
-            .doOnError { throwable ->
-                throwable.printStackTrace()
-            }
-            .subscribe {
-                Currencies.values()
-                        .filter { currency ->
-                            currency != Currencies.NULL
-                        }
-                        .forEach { currency ->
-                            ApiClient.get(url)
-                                    .create(ApiInterface::class.java)
-                                    .getAllOnBase(currency)
-                                    .observeOn(Schedulers.io())
-                                    .doOnError { throwable ->
-                                        println(currency.name + " error")
-                                        throwable.printStackTrace()
-                                    }
-                                    .subscribe { currencyResponse ->
-                                        println(currency.name + " success")
-                                        currencyResponseRepository.save(currencyResponse)
-                                    }
-                        }
-            }
+    try {
+        Observable
+                .interval(1, TimeUnit.MINUTES, Schedulers.io())
+                .take(90)
+                .map { min -> 90 - min }
+                .doOnError { throwable ->
+                    throwable.printStackTrace()
+                }
+                .subscribe {
+                    var count = 0
+                    Currencies.values()
+                            .filter { currency ->
+                                currency != Currencies.NULL
+                            }
+                            .forEach { currency ->
+                                Thread.sleep(333)
+                                println("Update Started !")
+                                ApiClient.get(url)
+                                        .create(ApiInterface::class.java)
+                                        .getAllOnBase(currency)
+                                        .observeOn(Schedulers.io())
+                                        .doOnError { throwable ->
+                                            count++
+                                            println(currency.name + " error $count")
+                                            throwable.printStackTrace()
+                                        }
+                                        .subscribe { currencyResponse ->
+                                            count++
+                                            println(currency.name + " success $count")
+                                            currencyResponseRepository.save(currencyResponse)
+                                        }
+                            }
+                    println("Update Finished !")
+                    count = 0
+                }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
