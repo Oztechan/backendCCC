@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
     }
 
     try {
-        Flowable.interval(0, 15, TimeUnit.MINUTES)
+        Flowable.interval(1, 1, TimeUnit.HOURS)
             .observeOn(Schedulers.io())
             .onBackpressureLatest()
             .doOnError { throwable ->
@@ -58,7 +58,7 @@ fun main(args: Array<String>) {
                         ApiClient.get(url)
                             .create(ApiInterface::class.java)
                             .getAllOnBase(currency)
-                            .observeOn(Schedulers.io())
+                            .observeOn(rx.schedulers.Schedulers.io())
                             .doOnError { throwable ->
                                 count++
                                 println(currency.name + " error $count")
@@ -81,7 +81,6 @@ fun main(args: Array<String>) {
 fun logOnException(exception: Exception) {
     println(SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date()))
     exception.printStackTrace()
-
 }
 
 fun logOnThrowable(throwable: Throwable) {
