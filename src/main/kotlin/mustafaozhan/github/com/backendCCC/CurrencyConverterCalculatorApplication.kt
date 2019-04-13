@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
     }
 
     try {
-        Flowable.interval(1, 1, TimeUnit.HOURS)
+        Flowable.interval(15, 15, TimeUnit.MINUTES)
             .observeOn(Schedulers.io())
             .onBackpressureLatest()
             .doOnError { throwable ->
