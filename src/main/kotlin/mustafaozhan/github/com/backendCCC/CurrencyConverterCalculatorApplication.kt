@@ -1,6 +1,5 @@
 package mustafaozhan.github.com.backendCCC
 
-
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import mustafaozhan.github.com.backendCCC.repository.CurrencyResponseRepository
@@ -14,7 +13,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Properties
 import java.util.concurrent.TimeUnit
-
 
 @SpringBootApplication
 class CurrencyConverterCalculatorApplication
@@ -50,9 +48,6 @@ fun main(args: Array<String>) {
                 println(SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date()))
                 println("Update Started !")
                 Currencies.values()
-                    .filter { currency ->
-                        currency != Currencies.NULL
-                    }
                     .forEach { currency ->
                         Thread.sleep(500)
                         ApiClient.get(url)
@@ -70,6 +65,7 @@ fun main(args: Array<String>) {
                                 currencyResponseRepository.save(currencyResponse)
                             }
                     }
+                Thread.sleep(500)
                 println("Update Finished !")
                 count = 0
             }

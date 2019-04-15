@@ -3,6 +3,7 @@ package mustafaozhan.github.com.backendCCC.tools
 /**
  * Created by Mustafa Ozhan on 2018-07-16.
  */
+@Suppress("LargeClass")
 enum class Currencies {
     AED,
     AFN,
@@ -171,6 +172,5 @@ enum class Currencies {
     ZAR,
     ZMK,
     ZMW,
-    ZWL,
-    NULL
+    ZWL
 }

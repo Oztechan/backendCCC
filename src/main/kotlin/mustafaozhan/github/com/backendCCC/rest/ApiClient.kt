@@ -11,9 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiClient {
     companion object {
         fun get(baseUrl: String): Retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(baseUrl)
-                .build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .baseUrl(baseUrl)
+            .build()
     }
 }

@@ -19,5 +19,5 @@ class CurrencyResponseServiceImpl : CurrencyResponseService {
     lateinit var currencyResponseService: CurrencyResponseRepository
 
     override fun findCurrencyResponseByBase(currency: String): CurrencyResponse =
-            currencyResponseService.findById(currency).get()
+        currencyResponseService.findById(currency).get()
 }
