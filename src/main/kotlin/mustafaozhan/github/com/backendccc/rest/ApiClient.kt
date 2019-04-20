@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendCCC.rest
+package mustafaozhan.github.com.backendccc.rest
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory

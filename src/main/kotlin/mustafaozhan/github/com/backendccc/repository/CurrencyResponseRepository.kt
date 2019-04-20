@@ -1,7 +1,7 @@
-package mustafaozhan.github.com.backendCCC.repository
+package mustafaozhan.github.com.backendccc.repository
 
-import mustafaozhan.github.com.backendCCC.model.CurrencyResponse
-import mustafaozhan.github.com.backendCCC.tools.Currencies
+import mustafaozhan.github.com.backendccc.model.CurrencyResponse
+import mustafaozhan.github.com.backendccc.tools.Currencies
 import org.springframework.data.repository.CrudRepository
 
 /**

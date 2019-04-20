@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendCCC.model
+package mustafaozhan.github.com.backendccc.model
 
 import com.google.gson.annotations.SerializedName
 import org.springframework.data.annotation.Id

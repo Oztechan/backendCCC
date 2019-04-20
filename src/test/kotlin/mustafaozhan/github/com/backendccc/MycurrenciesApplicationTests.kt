@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendCCC
+package mustafaozhan.github.com.backendccc
 
 import org.junit.Test
 import org.junit.runner.RunWith

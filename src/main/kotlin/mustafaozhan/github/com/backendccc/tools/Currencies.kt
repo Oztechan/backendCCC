@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendCCC.tools
+package mustafaozhan.github.com.backendccc.tools
 
 /**
  * Created by Mustafa Ozhan on 2018-07-16.
