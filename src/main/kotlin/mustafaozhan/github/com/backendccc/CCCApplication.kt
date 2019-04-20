@@ -79,7 +79,6 @@ fun main(args: Array<String>) {
                                     println(currency.name + " success $count")
                                     currencyResponseRepository.save(currencyResponse)
                                 }
-
                         }
                     Thread.sleep(DELAY)
                     println("Update Finished !")
