@@ -3,7 +3,7 @@ package mustafaozhan.github.com.backendccc.tools
 /**
  * Created by Mustafa Ozhan on 2018-07-16.
  */
-@Suppress("LargeClass")
+@Suppress("LargeClass", "unused", "UNUSED_PARAMETER")
 enum class Currencies(value: String) {
     AE("AED"),
     AF("AFN"),

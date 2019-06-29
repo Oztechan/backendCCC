@@ -4,7 +4,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 /**
  * Created by Mustafa Ozhan on 2018-10-19.
  */

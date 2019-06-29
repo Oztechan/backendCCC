@@ -2,7 +2,6 @@ package mustafaozhan.github.com.backendccc.model
 
 import com.google.gson.annotations.SerializedName
 
-
 data class NewResponse(
     @SerializedName("baseCountry") var baseCountry: String? = null,
     @SerializedName("baseCurrency") var baseCurrency: String? = null,

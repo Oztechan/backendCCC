@@ -1,11 +1,9 @@
 package mustafaozhan.github.com.backendccc.rest
 
-import mustafaozhan.github.com.backendccc.model.CurrencyResponse
 import mustafaozhan.github.com.backendccc.model.NewResponse
 import mustafaozhan.github.com.backendccc.tools.Currencies
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 import rx.Single
 
 /**

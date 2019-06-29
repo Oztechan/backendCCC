@@ -3,6 +3,7 @@ package mustafaozhan.github.com.backendccc
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import mustafaozhan.github.com.backendccc.extensions.toCurrencyResponse
 import mustafaozhan.github.com.backendccc.repository.CurrencyResponseRepository
 import mustafaozhan.github.com.backendccc.rest.ApiClient
 import mustafaozhan.github.com.backendccc.rest.ApiInterface
@@ -48,7 +49,7 @@ fun main(args: Array<String>) {
 
     try {
         compositeDisposable.add(
-            Flowable.interval(0, 0, TimeUnit.MINUTES)
+            Flowable.interval(0, 1, TimeUnit.HOURS)
                 .observeOn(Schedulers.io())
                 .onBackpressureLatest()
                 .doOnError { throwable ->
@@ -74,7 +75,7 @@ fun main(args: Array<String>) {
                                 .subscribe { newCurrencyResponse ->
                                     count++
                                     println(currency.name + " success $count")
-//                                    currencyResponseRepository.save(currencyResponse)
+                                    currencyResponseRepository.save(newCurrencyResponse.toCurrencyResponse())
                                 }
                         }
                     Thread.sleep(DELAY)
