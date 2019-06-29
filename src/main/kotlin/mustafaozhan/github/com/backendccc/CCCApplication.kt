@@ -19,13 +19,10 @@ import java.util.concurrent.TimeUnit
 @SpringBootApplication
 class CCCApplication
 
-const val REFRESH_PERIOD: Long = 10
 const val DELAY: Long = 500
 const val DATE_FORMAT = "yyyy/MM/dd HH:mm:ss"
 const val CONFIG_PROPERTIES = "/config.properties"
 const val CONFIG_BASE_URL = "config.baseUrl"
-const val CONFIG_API_KEY = "config.apiKey"
-const val CONFIG_API_SECRET = "config.apiSecret"
 
 @Autowired
 lateinit var currencyResponseRepository: CurrencyResponseRepository
@@ -46,12 +43,12 @@ fun main(args: Array<String>) {
         logOnException(e)
     }
     properties.apply {
-        url = getProperty(CONFIG_BASE_URL) + getProperty(CONFIG_API_KEY) + getProperty(CONFIG_API_SECRET)
+        url = getProperty(CONFIG_BASE_URL)
     }
 
     try {
         compositeDisposable.add(
-            Flowable.interval(REFRESH_PERIOD, REFRESH_PERIOD, TimeUnit.MINUTES)
+            Flowable.interval(0, 0, TimeUnit.MINUTES)
                 .observeOn(Schedulers.io())
                 .onBackpressureLatest()
                 .doOnError { throwable ->
@@ -74,10 +71,10 @@ fun main(args: Array<String>) {
                                     println(currency.name + " error $count")
                                     logOnThrowable(throwable)
                                 }
-                                .subscribe { currencyResponse ->
+                                .subscribe { newCurrencyResponse ->
                                     count++
                                     println(currency.name + " success $count")
-                                    currencyResponseRepository.save(currencyResponse)
+//                                    currencyResponseRepository.save(currencyResponse)
                                 }
                         }
                     Thread.sleep(DELAY)
