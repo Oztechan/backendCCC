@@ -12,6 +12,7 @@ interface CurrencyResponseService {
     fun findCurrencyResponseByBase(currency: String): CurrencyResponse
 }
 
+@Suppress("unused")
 @Service("currencyResponseService")
 class CurrencyResponseServiceImpl : CurrencyResponseService {
 
