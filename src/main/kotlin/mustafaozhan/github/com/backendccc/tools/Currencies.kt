@@ -30,7 +30,7 @@ enum class Currencies {
     BTN,
     BWP,
     BYN,
-    BYR,
+//    BYR,
     BZD,
     CAD,
     CDF,
@@ -93,8 +93,8 @@ enum class Currencies {
     LKR,
     LRD,
     LSL,
-    LTL,
-    LVL,
+//    LTL,
+//    LVL,
     LYD,
     MAD,
     MDL,
@@ -170,7 +170,7 @@ enum class Currencies {
     XPF,
     YER,
     ZAR,
-    ZMK,
+//    ZMK,
     ZMW,
     ZWL
 }
