@@ -29,7 +29,7 @@ const val CONFIG_BASE_URL = "config.baseUrl"
 @Autowired
 lateinit var currencyResponseRepository: CurrencyResponseRepository
 
-@Suppress("TooGenericExceptionCaught", "SpreadOperator")
+@Suppress("TooGenericExceptionCaught", "SpreadOperator", "LongMethod")
 fun main(args: Array<String>) {
 
     var url: String
@@ -57,34 +57,38 @@ fun main(args: Array<String>) {
                     logOnThrowable(throwable)
                 }
                 .subscribe {
-                    var count = 0
+                    var baseCount = 0
                     println(SimpleDateFormat(DATE_FORMAT).format(Date()))
                     println("Update Started !")
                     Currencies.values()
                         .forEach { base ->
-                            //                            Thread.sleep(DELAY)
+                            Thread.sleep(DELAY)
+                            var targetCount = 0
                             val currencyResponse = CurrencyResponse(base = base.name, rates = Rates())
                             Currencies.values().forEach { target ->
+
                                 ApiClient.get(url)
                                     .create(ApiInterface::class.java)
                                     .getAllOnBase(base, target)
                                     .observeOn(rx.schedulers.Schedulers.io())
                                     .doOnError { throwable ->
-                                        count++
-                                        println("Error ${base.name} to ${target.name}")
+                                        println("Error ${base.name}($baseCount) to ${target.name}($targetCount)")
+                                        targetCount++
                                         logOnThrowable(throwable)
                                     }
                                     .subscribe { rate ->
-                                        count++
-                                        println("Success ${base.name} to ${target.name}")
+                                        println("Success ${base.name}($baseCount) to ${target.name}($targetCount)")
+                                        targetCount++
                                         currencyResponse.rates?.setFieldByName(target.name, rate)
                                     }
                             }
                             currencyResponseRepository.save(currencyResponse)
+                            baseCount++
+                            targetCount = 0
                         }
                     Thread.sleep(DELAY)
                     println("Update Finished !")
-                    count = 0
+                    baseCount = 0
                 }
         )
     } catch (e: Exception) {
