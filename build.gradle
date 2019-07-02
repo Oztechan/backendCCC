@@ -18,7 +18,7 @@ def getGitVersionCode = { ->
 }
 
 group = 'mustafaozhan.github.com'
-version = getGitVersionCode
+version = getGitVersionCode.toString()
 sourceCompatibility = 1.8
 
 compileKotlin {
