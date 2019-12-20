@@ -48,52 +48,45 @@ fun main(args: Array<String>) {
         url = getProperty(CONFIG_BASE_URL)
     }
 
-    try {
-        compositeDisposable.add(
-            Flowable.interval(0, 1, TimeUnit.DAYS)
-                .observeOn(Schedulers.io())
-                .onBackpressureLatest()
-                .doOnError { throwable ->
-                    logOnThrowable(throwable)
-                }
-                .subscribe {
-                    var baseCount = 0
-                    println(SimpleDateFormat(DATE_FORMAT).format(Date()))
-                    println("Update Started !")
-                    Currencies.values()
-                        .forEach { base ->
-                            Thread.sleep(DELAY)
-                            var targetCount = 0
-                            val currencyResponse = CurrencyResponse(base = base.name, rates = Rates())
-                            Currencies.values().forEach { target ->
+    compositeDisposable.add(
+        Flowable.interval(0, 1, TimeUnit.DAYS)
+            .subscribeOn(Schedulers.io())
+            .onBackpressureLatest()
+            .subscribe({
+                var baseCount = 0
+                println(SimpleDateFormat(DATE_FORMAT).format(Date()))
+                println("Update Started !")
+                Currencies.values()
+                    .forEach { base ->
+                        Thread.sleep(DELAY)
+                        var targetCount = 0
+                        val currencyResponse = CurrencyResponse(base = base.name, rates = Rates())
+                        Currencies.values().forEach { target ->
 
-                                ApiClient.get(url)
-                                    .create(ApiInterface::class.java)
-                                    .getAllOnBase(base, target)
-                                    .observeOn(rx.schedulers.Schedulers.io())
-                                    .doOnError { throwable ->
-                                        println("Error ${base.name}($baseCount) to ${target.name}($targetCount)")
-                                        targetCount++
-                                        logOnThrowable(throwable)
-                                    }
-                                    .subscribe { rate ->
-                                        println("Success ${base.name}($baseCount) to ${target.name}($targetCount)")
-                                        targetCount++
-                                        currencyResponse.rates?.setFieldByName(target.name, rate)
-                                    }
-                            }
-                            currencyResponseRepository.save(currencyResponse)
-                            baseCount++
-                            targetCount = 0
+                            ApiClient.get(url)
+                                .create(ApiInterface::class.java)
+                                .getAllOnBase(base, target)
+                                .observeOn(rx.schedulers.Schedulers.io())
+                                .subscribe({ rate ->
+                                    println("Success ${base.name}($baseCount) to ${target.name}($targetCount)")
+                                    targetCount++
+                                    currencyResponse.rates?.setFieldByName(target.name, rate)
+
+                                }, { throwable ->
+                                    println("Error ${base.name}($baseCount) to ${target.name}($targetCount)")
+                                    targetCount++
+                                    logOnThrowable(throwable)
+                                })
                         }
-                    Thread.sleep(DELAY)
-                    println("Update Finished !")
-                    baseCount = 0
-                }
-        )
-    } catch (e: Exception) {
-        logOnException(e)
-    }
+                        currencyResponseRepository.save(currencyResponse)
+                        baseCount++
+                        targetCount = 0
+                    }
+                Thread.sleep(DELAY)
+                println("Update Finished !")
+                baseCount = 0
+            }, ::logOnThrowable)
+    )
 }
 
 private fun logOnException(exception: Exception) {
