@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendccc.tools
+package mustafaozhan.github.com.backendCCC.tools
 
 /**
  * Created by Mustafa Ozhan on 2018-07-16.
@@ -158,6 +158,7 @@ enum class Currencies {
     UYU,
     UZS,
     VEF,
+    VES,
     VND,
     VUV,
     WST,

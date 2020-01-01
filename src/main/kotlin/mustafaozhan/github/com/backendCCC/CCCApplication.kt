@@ -1,22 +1,21 @@
-package mustafaozhan.github.com.backendccc
+package mustafaozhan.github.com.backendCCC
 
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import mustafaozhan.github.com.backendccc.extensions.setFieldByName
-import mustafaozhan.github.com.backendccc.model.CurrencyResponse
-import mustafaozhan.github.com.backendccc.model.Rates
-import mustafaozhan.github.com.backendccc.repository.CurrencyResponseRepository
-import mustafaozhan.github.com.backendccc.rest.ApiClient
-import mustafaozhan.github.com.backendccc.rest.ApiInterface
-import mustafaozhan.github.com.backendccc.tools.Currencies
+import mustafaozhan.github.com.backendCCC.extensions.setFieldByName
+import mustafaozhan.github.com.backendCCC.model.CurrencyResponse
+import mustafaozhan.github.com.backendCCC.model.Rates
+import mustafaozhan.github.com.backendCCC.repository.CurrencyResponseRepository
+import mustafaozhan.github.com.backendCCC.rest.ApiClient
+import mustafaozhan.github.com.backendCCC.rest.ApiInterface
+import mustafaozhan.github.com.backendCCC.tools.Currencies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Properties
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @SpringBootApplication
@@ -32,7 +31,6 @@ lateinit var currencyResponseRepository: CurrencyResponseRepository
 @Suppress("TooGenericExceptionCaught", "SpreadOperator", "LongMethod")
 fun main(args: Array<String>) {
 
-    var url: String
     val properties = Properties()
     val context = runApplication<CCCApplication>(*args)
     val compositeDisposable = CompositeDisposable()
@@ -44,9 +42,7 @@ fun main(args: Array<String>) {
     } catch (e: IOException) {
         logOnException(e)
     }
-    properties.apply {
-        url = getProperty(CONFIG_BASE_URL)
-    }
+    val url = properties.getProperty(CONFIG_BASE_URL)
 
     compositeDisposable.add(
         Flowable.interval(0, 1, TimeUnit.DAYS)

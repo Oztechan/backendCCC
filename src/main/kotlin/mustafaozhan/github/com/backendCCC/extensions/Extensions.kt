@@ -1,6 +1,6 @@
-package mustafaozhan.github.com.backendccc.extensions
+package mustafaozhan.github.com.backendCCC.extensions
 
-import mustafaozhan.github.com.backendccc.model.Rates
+import mustafaozhan.github.com.backendCCC.model.Rates
 
 @Suppress("NestedBlockDepth")
 fun Rates.setFieldByName(name: String, value: Double) {
