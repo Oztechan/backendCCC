@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendCCC.app
+package mustafaozhan.github.com.backendCCC
 
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
