@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.backendCCC
+package mustafaozhan.github.com.backendCCC.app
 
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
@@ -13,12 +13,15 @@ import mustafaozhan.github.com.backendCCC.tools.Currencies
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.ComponentScan
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Properties
 import java.util.concurrent.TimeUnit
 
 @SpringBootApplication
+@ComponentScan(basePackages = ["mustafaozhan.github.com.backendCCC"])
 class CCCApplication
 
 const val DELAY: Long = 500
