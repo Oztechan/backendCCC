@@ -19,6 +19,9 @@ class CurrencyResponseServiceImpl : CurrencyResponseService {
     @Autowired
     lateinit var currencyResponseService: CurrencyResponseRepository
 
-    override fun findCurrencyResponseByBase(currency: String): CurrencyResponse =
+    override fun findCurrencyResponseByBase(currency: String): CurrencyResponse? = try {
         currencyResponseService.findById(currency).get()
+    } catch (e: Exception) {
+        null
+    }
 }
