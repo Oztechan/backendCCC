@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
  * Created by Mustafa Ozhan on 2018-10-21.
  */
 interface CurrencyResponseService {
-    fun findCurrencyResponseByBase(currency: String): CurrencyResponse
+    fun findCurrencyResponseByBase(currency: String): CurrencyResponse?
 }
 
 @Suppress("unused")
