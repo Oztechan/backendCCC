@@ -28,6 +28,7 @@ const val DELAY: Long = 500
 const val DATE_FORMAT = "yyyy/MM/dd HH:mm:ss"
 const val CONFIG_PROPERTIES = "/config.properties"
 const val CONFIG_BASE_URL = "config.baseUrl"
+
 @Autowired
 lateinit var currencyResponseRepository: CurrencyResponseRepository
 
@@ -67,12 +68,12 @@ fun main(args: Array<String>) {
                                 .getAllOnBase(base, target)
                                 .observeOn(rx.schedulers.Schedulers.io())
                                 .subscribe({ rate ->
-                                    println("Success ${base.name}($baseCount) to ${target.name}($targetCount)")
+                                    print("Success ${base.name}($baseCount) to ${target.name}($targetCount)-")
                                     targetCount++
                                     currencyResponse.rates?.setFieldByName(target.name, rate)
 
                                 }, { throwable ->
-                                    println("Error ${base.name}($baseCount) to ${target.name}($targetCount)")
+                                    println("\nError ${base.name}($baseCount) to ${target.name}($targetCount)")
                                     targetCount++
                                     logOnThrowable(throwable)
                                 })
@@ -97,3 +98,4 @@ private fun logOnThrowable(throwable: Throwable) {
     println(SimpleDateFormat(DATE_FORMAT).format(Date()))
     throwable.printStackTrace()
 }
+
