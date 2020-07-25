@@ -43,6 +43,7 @@ fun main(args: Array<String>) {
     try {
         properties.load(CCCApplication::class.java.getResourceAsStream(CONFIG_PROPERTIES))
     } catch (e: Exception) {
+        println()
         logOnException(e)
     }
     val url = properties.getProperty(CONFIG_BASE_URL)
@@ -52,6 +53,7 @@ fun main(args: Array<String>) {
             try {
                 updateCurrencies(url)
             } catch (e: Exception) {
+                println()
                 logOnException(e)
             }
             delay(DAY)
@@ -59,10 +61,10 @@ fun main(args: Array<String>) {
     }
 }
 
+@Suppress("NestedBlockDepth")
 private suspend fun updateCurrencies(url: String) {
+    println("~~~ Update Started ! ${getDate()} ~~~")
     var baseCount = 0
-    println(SimpleDateFormat(DATE_FORMAT).format(Date()))
-    println("Update Started !")
     Currencies.values().forEach { base ->
         var targetCount = 0
         val currencyResponse = CurrencyResponse(base = base.name, rates = Rates())
@@ -71,25 +73,29 @@ private suspend fun updateCurrencies(url: String) {
                 ApiClient.get(url)
                     .create(ApiInterface::class.java)
                     .getAllOnBase(base, target).let { rate ->
-                        println("Success ${base.name}($baseCount) to ${target.name}($targetCount)")
-                        targetCount++
+                        print("${base.name}($baseCount) => ${target.name}($targetCount) | ")
                         currencyResponse.rates?.setFieldByName(target.name, rate)
                     }
             } catch (e: Exception) {
+                println()
                 println("\nError ${base.name}($baseCount) to ${target.name}($targetCount)")
-                targetCount++
                 logOnException(e)
             }
+            targetCount++
         }
+        println()
         currencyResponseRepository.save(currencyResponse)
         baseCount++
         targetCount = 0
     }
-    println("Update Finished !")
+    println("~~~ Update Finished ! ~~~")
     baseCount = 0
 }
 
+private fun getDate() = SimpleDateFormat(DATE_FORMAT).format(Date())
+
 private fun logOnException(exception: Exception) {
-    println(SimpleDateFormat(DATE_FORMAT).format(Date()))
+    println("~~~ Error ${getDate()} ~~~")
     exception.printStackTrace()
+    println("~~~")
 }
