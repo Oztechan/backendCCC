@@ -20,6 +20,6 @@ class CurrencyResponseController {
 
     @RequestMapping(value = ["/byBase"], method = [RequestMethod.GET])
     @ResponseBody
-    fun getCurrencyResponseByBase(@RequestParam("base") base: String): CurrencyResponse? =
+    suspend fun getCurrencyResponseByBase(@RequestParam("base") base: String): CurrencyResponse? =
         currencyResponseService.findCurrencyResponseByBase(base)
 }

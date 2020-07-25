@@ -1,3 +1,5 @@
+@file:Suppress("TooGenericExceptionCaught")
+
 package mustafaozhan.github.com.backendCCC
 
 import kotlinx.coroutines.GlobalScope
@@ -15,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Properties
@@ -24,15 +25,15 @@ import java.util.Properties
 @ComponentScan(basePackages = ["mustafaozhan.github.com.backendCCC"])
 class CCCApplication
 
-private const val DELAY: Long = 500
 private const val DAY = (24 * 60 * 60 * 1000).toLong()
 private const val DATE_FORMAT = "yyyy/MM/dd HH:mm:ss"
 private const val CONFIG_PROPERTIES = "/config.properties"
 private const val CONFIG_BASE_URL = "config.baseUrl"
+
 @Autowired
 lateinit var currencyResponseRepository: CurrencyResponseRepository
 
-@Suppress("TooGenericExceptionCaught", "SpreadOperator", "LongMethod")
+@Suppress("SpreadOperator")
 fun main(args: Array<String>) {
     val properties = Properties()
     val context = runApplication<CCCApplication>(*args)
@@ -41,11 +42,10 @@ fun main(args: Array<String>) {
 
     try {
         properties.load(CCCApplication::class.java.getResourceAsStream(CONFIG_PROPERTIES))
-    } catch (e: IOException) {
+    } catch (e: Exception) {
         logOnException(e)
     }
     val url = properties.getProperty(CONFIG_BASE_URL)
-
 
     GlobalScope.launch {
         while (isActive) {
@@ -64,7 +64,6 @@ private suspend fun updateCurrencies(url: String) {
     println(SimpleDateFormat(DATE_FORMAT).format(Date()))
     println("Update Started !")
     Currencies.values().forEach { base ->
-        delay(DELAY)
         var targetCount = 0
         val currencyResponse = CurrencyResponse(base = base.name, rates = Rates())
         Currencies.values().forEach { target ->
@@ -86,7 +85,6 @@ private suspend fun updateCurrencies(url: String) {
         baseCount++
         targetCount = 0
     }
-    delay(DELAY)
     println("Update Finished !")
     baseCount = 0
 }
