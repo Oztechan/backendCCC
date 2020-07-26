@@ -2,10 +2,9 @@
 
 package mustafaozhan.github.com.backendCCC
 
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import mustafaozhan.github.com.backendCCC.extensions.setFieldByName
 import mustafaozhan.github.com.backendCCC.model.CurrencyResponse
 import mustafaozhan.github.com.backendCCC.model.Rates
@@ -34,7 +33,7 @@ private const val CONFIG_BASE_URL = "config.baseUrl"
 lateinit var currencyResponseRepository: CurrencyResponseRepository
 
 @Suppress("SpreadOperator")
-fun main(args: Array<String>) {
+fun main(args: Array<String>) = try {
     val properties = Properties()
     val context = runApplication<CCCApplication>(*args)
 
@@ -48,7 +47,7 @@ fun main(args: Array<String>) {
     }
     val url = properties.getProperty(CONFIG_BASE_URL)
 
-    GlobalScope.launch {
+    runBlocking {
         while (isActive) {
             try {
                 updateCurrencies(url)
@@ -59,6 +58,9 @@ fun main(args: Array<String>) {
             delay(DAY)
         }
     }
+} catch (e: Exception) {
+    // General exception handling
+    logOnException(e)
 }
 
 @Suppress("NestedBlockDepth")
